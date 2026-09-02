@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrando ubicación...</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 20px;
+    }
+    .spinner {
+      border: 4px solid #eee;
+      border-top: 4px solid #4285F4;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    #mensaje { color: #444; }
+    #error { color: #c0392b; display: none; }
+  </style>
+</head>
+<body>
+  <div class="spinner"></div>
+  <p id="mensaje">Obteniendo tu ubicación, por favor espera...</p>
+  <p id="error"></p>
+
+  <script>
+    const FORM_ID = "1Dg0nZcwst_S7St_VJI8tQEp2dRkqI4g0d6X_FHKNapk";
+    const ENTRY_LAT = "13303312";
+    const ENTRY_LNG = "678363640";
+
+    function irAlFormulario(lat, lng) {
+      const url = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?usp=pp_url&${ENTRY_LAT}=${lat}&${ENTRY_LNG}=${lng}`;
+      window.location.href = url;
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(pos) {
+          irAlFormulario(pos.coords.latitude, pos.coords.longitude);
+        },
+        function(err) {
+          document.getElementById("mensaje").style.display = "none";
+          document.getElementById("error").style.display = "block";
+          document.getElementById("error").innerHTML =
+            "No pudimos obtener tu ubicación. Verifica que hayas dado permiso de ubicación en tu navegador.<br><br>" +
+            `<a href="https://docs.google.com/forms/d/e/${FORM_ID}/viewform">Continuar sin ubicación</a>`;
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    } else {
+      document.getElementById("error").style.display = "block";
+      document.getElementById("error").innerText = "Tu navegador no soporta geolocalización.";
+    }
+  </script>
+</body>
+</html>
