@@ -43,7 +43,7 @@
     const ENTRY_LNG = "678363640";
 
     function irAlFormulario(lat, lng) {
-      const url = `https://docs.google.com/forms/d/e/${1Dg0nZcwst_S7St_VJI8tQEp2dRkqI4g0d6X_FHKNapk}/viewform?usp=pp_url&${ENTRY_LAT}=${lat}&${ENTRY_LNG}=${lng}`;
+      const url = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?usp=pp_url&${ENTRY_LAT}=${lat}&${ENTRY_LNG}=${lng}`;
       window.location.href = url;
     }
 
@@ -57,7 +57,7 @@
           document.getElementById("error").style.display = "block";
           document.getElementById("error").innerHTML =
             "No pudimos obtener tu ubicación. Verifica que hayas dado permiso de ubicación en tu navegador.<br><br>" +
-            `<a href="https://docs.google.com/forms/d/e/${1Dg0nZcwst_S7St_VJI8tQEp2dRkqI4g0d6X_FHKNapk}/viewform">Continuar sin ubicación</a>`;
+            `<a href="https://docs.google.com/forms/d/e/${FORM_ID}/viewform">Continuar sin ubicación</a>`;
         },
         { enableHighAccuracy: true, timeout: 10000 }
       );
